@@ -1,0 +1,29 @@
+<h1>Listing Businesses</h1>
+<p id="notice"><%= notice %></p>
+<%= form_tag({:controller => "/businesses", :action => "create"}, :id => 'business_form', method: "post") do %>
+  <div class="form-group">
+    <%= radio_button_tag('type_search', 'all_data', true, id: 'all') %>
+    <%= label_tag :all %>
+    <%= radio_button_tag('type_search', 'google_data', false, id: 'google') %>
+    <%= label_tag :google %>
+    <%= radio_button_tag('type_search', 'database_data', false, id: 'database') %>
+    <%= label_tag :database %>
+  </div>
+  <div class="form-group col-sm-11">
+    <%= text_field_tag(:q, nil, placeholder: 'Search business', id: 'searchInput', class: 'form-control') %>
+    <%= hidden_field_tag(:place_id, '') %>
+    <%= hidden_field_tag(:id, '') %>
+  </div>
+  <div class="form-group col-sm-1">
+    <%= submit_tag 'Claim Business', class: 'btn btn-primary', id: 'submit_btn', disabled: true %>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-12">
+    <% @businesses.each do |business| %>
+    <p><i class="ui-red fa <%= business.place_id.nil? ? 'fa fa-building' : 'fa fa-google' %>"></i> <%= business.business_name %> <%= business.address %></p>
+    <% end %>
+  </div>
+</div>
+
